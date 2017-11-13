@@ -27,13 +27,30 @@ public class Employee {
 	private String empID; //Unique employee id#
 	private LocalDateTime startDate;
 	private int payRate; //1500 = 15.00$
-	boolean isDriver; 
+	private boolean isDriver; 
+	private int employeeID;
 	
 	
-	public Employee(){
-		
+	
+
+
+public Employee(String name, Address address, LocalDateTime startDate, int payRate,
+			boolean isDriver) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.startDate = startDate;
+		this.payRate = payRate;
+		this.isDriver = isDriver;
 	}
 
+public Employee() {
+		super();
+	}
+
+public Employee(String name){
+	this.name = name;	
+	}
 	
 	public String getName() {
 		return name;
@@ -88,11 +105,24 @@ public class Employee {
 	public boolean isDriver() {
 		return isDriver;
 	}
-
+	
+	public int getEmployeeID(){
+		return employeeID;
+	}
+	
+	public void setEmployeeID(int employeeID){
+		this.employeeID = employeeID;
+	}
 
 	public void setDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
 	
+	public void printEmployee(){
+		String info  ="Name: "+ this.getName()+
+				 "\nEmployee ID:"+ employeeID;
+		
+		System.out.println(info);
+	}
 	
 }
