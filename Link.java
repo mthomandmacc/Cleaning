@@ -14,7 +14,7 @@ public class Link<O> {
 	public Link() {
 
 	}
-
+ 
 	public Link(O obj, Link next) {
 		this.object = obj;
 		this.next = next;

@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  *
  */
 public class CleaningEvent {
-	
+	 
 	private WorkSite workSite;
 	private LocalDateTime startTime;
 	private LocalDateTime deadLine;

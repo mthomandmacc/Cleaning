@@ -12,7 +12,7 @@ public class EmployeeList extends LinkedList {
 	public EmployeeList(EmployeeLink first) {
 		this.first = first;
 	}
-
+ 
 	/*
 	 * public Link mergeSort(EmployeeLink headRef){
 	 * 

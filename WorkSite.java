@@ -7,7 +7,7 @@
  *
  */
 public class WorkSite {
-	
+	 
 	private Address address;
 	private boolean hasSecurityCode;
 	private String securityCode;

@@ -4,7 +4,7 @@ public static void main(String[] args) {
 	
 	/*
 	 * 
-	 * 
+	 *  
 	 * 
 	 *public Address(String city, String state, String streetAddress, String zipCode) {
 		super();

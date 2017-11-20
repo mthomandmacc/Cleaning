@@ -14,7 +14,7 @@ public class LinkedList<O> {
 	public LinkedList() {
 
 	}
-
+ 
 	public boolean isEmpty() {
 		return this.first == null;
 	}

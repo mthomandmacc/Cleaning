@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  *
  */
 public class Employee {
-	/*
+	/* 
 	 *  NOTES  an employee .StartsWork(LocalDateTime) and then .EndsWork(LocalDateTime) the interval is stored in hours worked.  But also a 
 	 *  place where it is logged with where they were working. 
 	 *  
