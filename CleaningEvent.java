@@ -16,6 +16,13 @@ public class CleaningEvent {
 	private boolean isRecurring = false; //if false, then this only occurs once.  if true then it will be added to a list of recurring events
 	private int recurrenceInterval;	//once a week? twice a week?
 	private boolean isCompleted = false;
+	private boolean hasEmployee;
+	private Employee employeeAssigned;
+	
+	
+	
+	
+	
 	
 	public CleaningEvent(WorkSite workSite, LocalDateTime startTime, LocalDateTime deadLine, boolean isRecurring,
 			int recurrenceInterval) {

@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 
 /**
@@ -27,13 +28,50 @@ public class Employee {
 	private String empID; //Unique employee id#
 	private LocalDateTime startDate;
 	private int payRate; //1500 = 15.00$
-	boolean isDriver; 
+	private boolean isDriver; 
+	private int employeeID;
 	
 	
-	public Employee(){
-		
+	//////////////////
+	/*
+	private PayCheckList Paychecks;
+	private WorkHistoryList daysWorked
+	private UpcomingScheduleList
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	*
+	*
+	*
+	*/
+
+public Employee(String name, Address address, LocalDateTime startDate, int payRate,
+			boolean isDriver) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.startDate = startDate;
+		this.payRate = payRate;
+		this.isDriver = isDriver;
 	}
 
+public Employee() {
+		super();
+	}
+
+public Employee(String name){
+	this.name = name;	
+	}
 	
 	public String getName() {
 		return name;
@@ -88,11 +126,39 @@ public class Employee {
 	public boolean isDriver() {
 		return isDriver;
 	}
-
+	
+	public int getEmployeeID(){
+		return employeeID;
+	}
+	
+	public void setEmployeeID(int employeeID){
+		this.employeeID = employeeID;
+	}
 
 	public void setDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
+	private String payFormat(){
+		
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		String payFormat = formatter.format((payRate/100.0));
 	
+		return payFormat;
+	}
+	
+	
+	
+	
+	public void printEmployee(){
+		String startDateString = "";
+		if(startDate!=null){startDateString = "\nEmployee Start Date: "+startDate.toString();}
+		String info  ="Name: "+ this.getName()+
+				 "\nEmployee ID:"+ employeeID+
+				startDateString+
+				 "\nEmployee Pay Rate: "+payFormat()+"/hour"+
+				 "\n";
+		
+		System.out.println(info);
+	}
 	
 }
