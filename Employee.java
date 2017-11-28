@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  *
  */
 public class Employee {
-	/* 
+	/*
 	 *  NOTES  an employee .StartsWork(LocalDateTime) and then .EndsWork(LocalDateTime) the interval is stored in hours worked.  But also a 
 	 *  place where it is logged with where they were working. 
 	 *  
@@ -29,7 +29,9 @@ public class Employee {
 	private LocalDateTime startDate;
 	private int payRate; //1500 = 15.00$
 	private boolean isDriver; 
-	private int employeeID;
+	private boolean isCurrentEmployee;
+	private CleaningEventList cleaningEvents = new CleaningEventList();
+	
 	
 	
 	//////////////////
@@ -37,23 +39,19 @@ public class Employee {
 	private PayCheckList Paychecks;
 	private WorkHistoryList daysWorked
 	private UpcomingScheduleList
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	*
 	*
 	*
 	*/
+
+public CleaningEventList getCleaningEvents() {
+		return cleaningEvents;
+	}
+
+	public void setCleaningEvents(CleaningEventList cleaningEvents) {
+		this.cleaningEvents = cleaningEvents;
+	}
 
 public Employee(String name, Address address, LocalDateTime startDate, int payRate,
 			boolean isDriver) {
@@ -66,7 +64,7 @@ public Employee(String name, Address address, LocalDateTime startDate, int payRa
 	}
 
 public Employee() {
-		super();
+		
 	}
 
 public Employee(String name){
@@ -93,12 +91,12 @@ public Employee(String name){
 	}
 
 
-	public String getEmpID() {
+	public String getEmployeeID() {
 		return empID;
 	}
 
 
-	public void setEmpID(String empID) {
+	public void setEmployeeID(String empID) {
 		this.empID = empID;
 	}
 
@@ -126,19 +124,12 @@ public Employee(String name){
 	public boolean isDriver() {
 		return isDriver;
 	}
-	
-	public int getEmployeeID(){
-		return employeeID;
-	}
-	
-	public void setEmployeeID(int employeeID){
-		this.employeeID = employeeID;
-	}
 
 	public void setDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
-	private String payFormat(){
+	
+	private String payRateFormat(){
 		
 		NumberFormat formatter = NumberFormat.getCurrencyInstance();
 		String payFormat = formatter.format((payRate/100.0));
@@ -146,16 +137,29 @@ public Employee(String name){
 		return payFormat;
 	}
 	
+	private String payFormat(int hours){
+		
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		String payFormat = formatter.format(hours*(payRate/100.0));
 	
+		return payFormat;
+	}
 	
-	
+	public boolean isCurrentEmployee() {
+		return isCurrentEmployee;
+	}
+
+	public void setCurrentEmployee(boolean isCurrentEmployee) {
+		this.isCurrentEmployee = isCurrentEmployee;
+	}
+
 	public void printEmployee(){
 		String startDateString = "";
 		if(startDate!=null){startDateString = "\nEmployee Start Date: "+startDate.toString();}
 		String info  ="Name: "+ this.getName()+
-				 "\nEmployee ID:"+ employeeID+
+				 "\nEmployee ID:"+ empID+
 				startDateString+
-				 "\nEmployee Pay Rate: "+payFormat()+"/hour"+
+				 "\nEmployee Pay Rate: "+payRateFormat()+"/hour"+
 				 "\n";
 		
 		System.out.println(info);

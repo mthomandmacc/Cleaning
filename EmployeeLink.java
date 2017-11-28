@@ -11,7 +11,7 @@ public class EmployeeLink extends Link{
 		this.object = employee;
 	}
 	
-	 
+	
 	@Override
 	public Employee getObject(){
 		return this.object;
