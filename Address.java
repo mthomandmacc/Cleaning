@@ -8,19 +8,35 @@
  */
 public class Address {
 	
+	private String name;
 	private String city;
 	private String state;
 	private String streetAddress;
 	private String zipCode;
 	
+
 	public Address(String city, String state, String streetAddress, String zipCode) {
-		super();
+		this.city = city;
+		this.state = state;
+		this.streetAddress = streetAddress;
+		this.zipCode = zipCode;
+	}
+	public Address(String name, String city, String state, String streetAddress, String zipCode) {
+		this.name = name;
 		this.city = city;
 		this.state = state;
 		this.streetAddress = streetAddress;
 		this.zipCode = zipCode;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getCity() {
 		return city;
 	}

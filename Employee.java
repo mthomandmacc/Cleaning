@@ -1,3 +1,4 @@
+import java.text.NumberFormat;
 import java.time.LocalDateTime;
 
 /**
@@ -27,13 +28,48 @@ public class Employee {
 	private String empID; //Unique employee id#
 	private LocalDateTime startDate;
 	private int payRate; //1500 = 15.00$
-	boolean isDriver; 
+	private boolean isDriver; 
+	private boolean isCurrentEmployee;
+	private CleaningEventList cleaningEvents = new CleaningEventList();
 	
 	
-	public Employee(){
+	
+	//////////////////
+	/*
+	private PayCheckList Paychecks;
+	private WorkHistoryList daysWorked
+	private UpcomingScheduleList
+
+	*
+	*
+	*
+	*/
+
+public CleaningEventList getCleaningEvents() {
+		return cleaningEvents;
+	}
+
+	public void setCleaningEvents(CleaningEventList cleaningEvents) {
+		this.cleaningEvents = cleaningEvents;
+	}
+
+public Employee(String name, Address address, LocalDateTime startDate, int payRate,
+			boolean isDriver) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.startDate = startDate;
+		this.payRate = payRate;
+		this.isDriver = isDriver;
+	}
+
+public Employee() {
 		
 	}
 
+public Employee(String name){
+	this.name = name;	
+	}
 	
 	public String getName() {
 		return name;
@@ -55,12 +91,12 @@ public class Employee {
 	}
 
 
-	public String getEmpID() {
+	public String getEmployeeID() {
 		return empID;
 	}
 
 
-	public void setEmpID(String empID) {
+	public void setEmployeeID(String empID) {
 		this.empID = empID;
 	}
 
@@ -89,10 +125,44 @@ public class Employee {
 		return isDriver;
 	}
 
-
 	public void setDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
 	
+	private String payRateFormat(){
+		
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		String payFormat = formatter.format((payRate/100.0));
+	
+		return payFormat;
+	}
+	
+	private String payFormat(int hours){
+		
+		NumberFormat formatter = NumberFormat.getCurrencyInstance();
+		String payFormat = formatter.format(hours*(payRate/100.0));
+	
+		return payFormat;
+	}
+	
+	public boolean isCurrentEmployee() {
+		return isCurrentEmployee;
+	}
+
+	public void setCurrentEmployee(boolean isCurrentEmployee) {
+		this.isCurrentEmployee = isCurrentEmployee;
+	}
+
+	public void printEmployee(){
+		String startDateString = "";
+		if(startDate!=null){startDateString = "\nEmployee Start Date: "+startDate.toString();}
+		String info  ="Name: "+ this.getName()+
+				 "\nEmployee ID:"+ empID+
+				startDateString+
+				 "\nEmployee Pay Rate: "+payRateFormat()+"/hour"+
+				 "\n";
+		
+		System.out.println(info);
+	}
 	
 }

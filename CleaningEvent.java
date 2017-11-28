@@ -1,4 +1,6 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * 
@@ -11,31 +13,43 @@ import java.time.LocalDateTime;
 public class CleaningEvent {
 	
 	private WorkSite workSite;
-	private LocalDateTime startTime;
-	private LocalDateTime deadLine;
-	private boolean isRecurring = false; //if false, then this only occurs once.  if true then it will be added to a list of recurring events
-	private int recurrenceInterval;	//once a week? twice a week?
+	
+	private LocalTime startTime;
+	private LocalTime deadlineTime;
+	
+	private LocalDate startDate;
+	private LocalDate deadlineDate;
+	
+	private int dayOfWeekStart;
+	private int dayOfWeekdeadline;
+	
 	private boolean isCompleted = false;
+	private LocalDateTime completedTime = null;
+	private boolean hasEmployeeAssigned;
+	private Employee employeeAssigned;
 	
-	public CleaningEvent(WorkSite workSite, LocalDateTime startTime, LocalDateTime deadLine, boolean isRecurring,
-			int recurrenceInterval) {
-
+	public CleaningEvent(WorkSite workSite, int startMonth, int startDateDayOfMonth, int startDateYear, int startHour, int startMinute, int deadlineMonth, int deadlineDateDayOfMonth, int deadlineDateYear, int deadlineHour, int deadlineMinute) {
 		this.workSite = workSite;
-		this.startTime = startTime;
-		this.deadLine = deadLine;
-		this.isRecurring = isRecurring;
-		this.recurrenceInterval = recurrenceInterval;
-	
+		this.startTime = LocalTime.of(startHour, startMinute);
+		this.deadlineTime = LocalTime.of(deadlineHour, deadlineMinute);
+		this.startDate = LocalDate.of(startDateYear, startMonth, startDateDayOfMonth);
+		this.deadlineDate = LocalDate.of(deadlineDateYear, deadlineMonth, deadlineDateDayOfMonth);
+			
 	}
 	
-	public CleaningEvent(WorkSite workSite, LocalDateTime startTime, LocalDateTime deadLine) {
+	public CleaningEvent(WorkSite workSite, LocalDate startDate, LocalTime startTime, LocalDate deadlineDate, LocalTime deadlineTime) {
 	
 		this.workSite = workSite;
 		this.startTime = startTime;
-		this.deadLine = deadLine;
+		this.deadlineTime = deadlineTime;
+		this.startDate = startDate;
+		this.deadlineDate = deadlineDate;
 	
 	}
 
+	/**
+	 * Empty Cleaning Event constructor
+	 */
 	public CleaningEvent() {
 	
 	}
@@ -48,36 +62,52 @@ public class CleaningEvent {
 		this.workSite = workSite;
 	}
 
-	public LocalDateTime getStartTime() {
+	public LocalTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(LocalDateTime startTime) {
+	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public LocalDateTime getDeadLine() {
-		return deadLine;
+	public LocalTime getDeadlineTime() {
+		return deadlineTime;
 	}
 
-	public void setDeadLine(LocalDateTime deadLine) {
-		this.deadLine = deadLine;
+	public void setDeadlineTime(LocalTime deadlineTime) {
+		this.deadlineTime = deadlineTime;
 	}
 
-	public boolean isRecurring() {
-		return isRecurring;
+	public LocalDate getStartDate() {
+		return startDate;
 	}
 
-	public void setRecurring(boolean isRecurring) {
-		this.isRecurring = isRecurring;
+	public void setStartDate(LocalDate startDate) {
+		this.startDate = startDate;
 	}
 
-	public int getRecurrenceInterval() {
-		return recurrenceInterval;
+	public LocalDate getDeadlineDate() {
+		return deadlineDate;
 	}
 
-	public void setRecurrenceInterval(int recurrenceInterval) {
-		this.recurrenceInterval = recurrenceInterval;
+	public void setDeadlineDate(LocalDate deadlineDate) {
+		this.deadlineDate = deadlineDate;
+	}
+
+	public int getDayOfWeekStart() {
+		return dayOfWeekStart;
+	}
+
+	public void setDayOfWeekStart(int dayOfWeekStart) {
+		this.dayOfWeekStart = dayOfWeekStart;
+	}
+
+	public int getDayOfWeekdeadline() {
+		return dayOfWeekdeadline;
+	}
+
+	public void setDayOfWeekdeadline(int dayOfWeekdeadline) {
+		this.dayOfWeekdeadline = dayOfWeekdeadline;
 	}
 
 	public boolean isCompleted() {
@@ -87,7 +117,37 @@ public class CleaningEvent {
 	public void setCompleted(boolean isCompleted) {
 		this.isCompleted = isCompleted;
 	}
-	
-	
-	
+
+	public boolean isHasEmployee() {
+		return hasEmployeeAssigned;
+	}
+
+	public void setHasEmployee(boolean hasEmployee) {
+		this.hasEmployeeAssigned = hasEmployee;
+	}
+
+	public Employee getEmployeeAssigned() {
+		return employeeAssigned;
+	}
+
+	public void setEmployeeAssigned(Employee employeeAssigned) {
+		this.employeeAssigned = employeeAssigned;
+	}
+
+	public LocalDateTime getCompletedTime() {
+		return completedTime;
+	}
+
+	public void setCompletedTime(LocalDateTime completedTime) {
+		this.completedTime = completedTime;
+	}
+
+	public boolean isHasEmployeeAssigned() {
+		return hasEmployeeAssigned;
+	}
+
+	public void setHasEmployeeAssigned(boolean hasEmployeeAssigned) {
+		this.hasEmployeeAssigned = hasEmployeeAssigned;
+	}
+		
 }
