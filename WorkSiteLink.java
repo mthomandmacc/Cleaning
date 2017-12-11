@@ -1,7 +1,7 @@
 
 public class WorkSiteLink {
-	WorkSite workSite;
-	WorkSiteLink next = null;
+	private WorkSite workSite;
+	private WorkSiteLink next = null;
 	
 	public WorkSiteLink(WorkSite workSite){
 		this.workSite = workSite;

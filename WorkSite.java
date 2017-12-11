@@ -12,6 +12,10 @@ public class WorkSite {
 	private Address address;
 	private boolean hasSecurityCode;
 	private String securityCode;
+	private String workSiteID;
+	
+
+	
 
 	public WorkSite(String title, Address address, boolean hasSecurityCode) {
 
@@ -21,11 +25,15 @@ public class WorkSite {
 
 	}
 
-	/**
-	 * Double the size of the duties array when necessary, to add more room
-	 */
 
 
+	public String getWorkSiteID() {
+		return workSiteID;
+	}
+
+	public void setWorkSiteID(String workSiteID) {
+		this.workSiteID = workSiteID;
+	}
 	public Address getAddress() {
 		return address;
 	}
@@ -57,6 +65,13 @@ public class WorkSite {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+	public void print(){
+		
+		String workPrint = ""; 
+		System.out.println(this.title+"\n\n");
+		this.getAddress().print();
+		
 	}
 
 }
