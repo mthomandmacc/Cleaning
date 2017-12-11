@@ -1,6 +1,8 @@
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 
@@ -11,47 +13,66 @@ import java.time.LocalTime;
  *
  */
 public class CleaningEvent {
-	
+
 	private WorkSite workSite;
-	
+
 	private LocalTime startTime;
 	private LocalTime deadlineTime;
-	
+
 	private LocalDate startDate;
 	private LocalDate deadlineDate;
-	
+
 	private int dayOfWeekStart;
 	private int dayOfWeekdeadline;
-	
+
 	private boolean isCompleted = false;
 	private LocalDateTime completedTime = null;
 	private boolean hasEmployeeAssigned;
 	private Employee employeeAssigned;
-	
-	public CleaningEvent(WorkSite workSite, int startMonth, int startDateDayOfMonth, int startDateYear, int startHour, int startMinute, int deadlineMonth, int deadlineDateDayOfMonth, int deadlineDateYear, int deadlineHour, int deadlineMinute) {
+
+	private String cleaningEventID;
+
+	/**
+	 * 
+	 * @param workSite
+	 * @param startMonth
+	 * @param startDateDayOfMonth
+	 * @param startDateYear
+	 * @param startHour
+	 * @param startMinute
+	 * @param deadlineMonth
+	 * @param deadlineDateDayOfMonth
+	 * @param deadlineDateYear
+	 * @param deadlineHour
+	 * @param deadlineMinute
+	 */
+	public CleaningEvent(WorkSite workSite, int startMonth, int startDateDayOfMonth, int startDateYear, int startHour,
+			int startMinute, int deadlineMonth, int deadlineDateDayOfMonth, int deadlineDateYear, int deadlineHour,
+			int deadlineMinute) {
 		this.workSite = workSite;
 		this.startTime = LocalTime.of(startHour, startMinute);
 		this.deadlineTime = LocalTime.of(deadlineHour, deadlineMinute);
 		this.startDate = LocalDate.of(startDateYear, startMonth, startDateDayOfMonth);
 		this.deadlineDate = LocalDate.of(deadlineDateYear, deadlineMonth, deadlineDateDayOfMonth);
-			
+
 	}
-	
-	public CleaningEvent(WorkSite workSite, LocalDate startDate, LocalTime startTime, LocalDate deadlineDate, LocalTime deadlineTime) {
-	
+
+	public CleaningEvent(WorkSite workSite, LocalDate startDate, LocalTime startTime, LocalDate deadlineDate,
+			LocalTime deadlineTime) {
+
 		this.workSite = workSite;
 		this.startTime = startTime;
 		this.deadlineTime = deadlineTime;
 		this.startDate = startDate;
 		this.deadlineDate = deadlineDate;
-	
+
 	}
 
 	/**
 	 * Empty Cleaning Event constructor
 	 */
 	public CleaningEvent() {
-	
+
 	}
 
 	public WorkSite getWorkSite() {
@@ -149,5 +170,27 @@ public class CleaningEvent {
 	public void setHasEmployeeAssigned(boolean hasEmployeeAssigned) {
 		this.hasEmployeeAssigned = hasEmployeeAssigned;
 	}
-		
+
+	public String getCleaningEventID() {
+		return this.cleaningEventID;
+	}
+
+	public void setCleaningEventID(String id) {
+		this.cleaningEventID = id;
+	}
+
+	public void print() {
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+		DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("hh:mm a");
+
+		System.out.println("ID: " + this.cleaningEventID + "\nWork Site: " + this.workSite.getTitle());
+		if (this.hasEmployeeAssigned) {
+			System.out.println("Employee Assigned: " + this.employeeAssigned.getName() + "\nEmployee ID: "
+					+ this.employeeAssigned.getEmployeeID());
+		}
+		System.out.println("Start date: " + dateFormat.format(this.startDate) + "\nStart time: "
+				+ timeFormat.format(this.startTime) + "\n------------------------" + "\nDeadline date: "
+				+ dateFormat.format(this.deadlineDate) + "\nDeadline time: " + timeFormat.format(this.deadlineTime)
+				+ "\n");
+	}
 }

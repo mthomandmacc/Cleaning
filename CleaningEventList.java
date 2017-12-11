@@ -1,8 +1,8 @@
 
 public class CleaningEventList {
-	//The head of our list
+	// The head of our list
 	private CleaningEventLink first;
-	//number of events in the list
+	// number of events in the list
 	private int size = 0;
 
 	/**
@@ -10,57 +10,13 @@ public class CleaningEventList {
 	 */
 	public CleaningEventList() {
 	}
-	
-	/*
-	public void addEvent(CleaningEvent event, String startDay, int startHour, int startMinute, String deadLineDay,
-			int deadlineHour, int deadLineMinute) {
 
-	}
-	
-	
-	
-	public void addEvent(CleaningEvent event) {
-		CleaningEventLink newLink = new CleaningEventLink(event);
-
+	protected void setFirst(CleaningEventLink newLink) {
 		if (this.first == null) {
-			first = newLink;
-			this.size++;
-
-		} else {
-			CleaningEventLink current = first;
-			// We work our way to the last link in the list
-			while (current != null && current.getNext() != null) {
-				current = current.getNext();
-			}
-			// set the last link's "next link" to our new link, adding our new
-			// link to the end
-			current.setNext(newLink);
-			this.size++;
-		}
-	}
-*/
-	
-	/*
-	 * sort by
-	 * 
-	 * worksite name
-	 * 
-	 * employee assigned
-	 * 
-	 * isCompleted
-	 * 
-	 * startDate
-	 * 
-	 * 
-	 * GET ONLY INCOMPLETE GET ONLY COMPLETE GET ONLY BY SPECIFIC EMPLOYEE GET
-	 * ONLY IS RECURRING
-	 * 
-	 */
-	protected void setFirst(CleaningEventLink newLink){
-		if(this.first == null){
 			this.first = newLink;
 		}
 	}
+
 	public CleaningEventLink sortByWorkSiteNameAscending() {
 		CleaningEventLink temp = this.first;
 		temp = mergeSort(temp, 1);
@@ -97,6 +53,18 @@ public class CleaningEventList {
 		return temp;
 	}
 
+	public CleaningEventLink sortByEmployeeIDAscending() {
+		CleaningEventLink temp = this.first;
+		temp = mergeSort(temp, 7);
+		return temp;
+	}
+
+	public CleaningEventLink sortByEmployeeIDDescending() {
+		CleaningEventLink temp = this.first;
+		temp = mergeSort(temp, 8);
+		return temp;
+	}
+
 	private CleaningEventLink mergeSort(CleaningEventLink head, int sortByIndex) {
 
 		if (head == null || head.getNext() == null) {
@@ -123,7 +91,7 @@ public class CleaningEventList {
 		}
 
 		if (sortByIndex == 1) {
-			//Sort by Work Site title ascending
+			// Sort by Work Site title ascending
 			if (link1.getEvent().getWorkSite().getTitle().compareTo(link2.getEvent().getWorkSite().getTitle()) >= 0) {
 				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
 				return link2;
@@ -132,7 +100,7 @@ public class CleaningEventList {
 				return link1;
 			}
 		} else if (sortByIndex == 2) {
-			//Sort by work site title descending
+			// Sort by work site title descending
 			if (link1.getEvent().getWorkSite().getTitle().compareTo(link2.getEvent().getWorkSite().getTitle()) < 0) {
 				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
 				return link2;
@@ -175,6 +143,24 @@ public class CleaningEventList {
 				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
 				return link1;
 			}
+		} else if (sortByIndex == 7) {
+			if (link1.getEvent().getEmployeeAssigned().getEmployeeID()
+					.compareTo(link2.getEvent().getEmployeeAssigned().getEmployeeID()) > 0) {
+				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
+				return link2;
+			} else {
+				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
+				return link1;
+			}
+		} else if (sortByIndex == 8) {
+			if (link1.getEvent().getEmployeeAssigned().getEmployeeID()
+					.compareTo(link2.getEvent().getEmployeeAssigned().getEmployeeID()) < 0) {
+				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
+				return link2;
+			} else {
+				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
+				return link1;
+			}
 		} else {
 			return null;
 		}
@@ -193,25 +179,85 @@ public class CleaningEventList {
 		middle = slow;
 		return middle;
 	}
-	
-	public boolean isEmpty(){
-		return (this.first==null);
+
+	public CleaningEvent find(String CleaningEventID) {
+		CleaningEventLink current = this.first;
+		while (current != null) {
+			if (current.getEvent().getCleaningEventID().equals(CleaningEventID)) {
+				return current.getEvent();
+			}
+			current = current.getNext();
+		}
+		return null;
 	}
 
-	protected void insert(CleaningEventLink newLink){
-		if(isEmpty()){
-			this.first = newLink;
+	private CleaningEventLink removeNextLink(CleaningEventLink previousLink) {
+
+		CleaningEventLink removedLink = previousLink.getNext();
+		CleaningEventLink newNext = previousLink.getNext().getNext();
+		previousLink.setNext(newNext);
+		return removedLink;
+
+	}
+
+	public CleaningEventLink remove(String CleaningEventID) {
+
+		if (this.first.getEvent().getCleaningEventID().equals(CleaningEventID)) {
+
+			CleaningEventLink removed = this.first;
+			this.first = this.first.getNext();
+			return removed;
+
 		} else {
-			newLink.setNext(this.first);
-			this.first = newLink;
+			CleaningEventLink current = this.first;
+			CleaningEventLink previous = current;
+			// cycle through our list searching for a match
+			while (current != null) {
+
+				if (current.getEvent().getCleaningEventID().equals(CleaningEventID)) {
+					CleaningEvent removed = current.getEvent();
+					return removeNextLink(previous);
+
+				}
+
+				previous = current;
+				current = current.getNext();
+			}
+			return null;
 		}
 	}
+
+	public boolean isEmpty() {
+		return (this.first == null);
+	}
+
+	protected void insert(CleaningEvent newEvent) {
+		CleaningEventLink newEventLink = new CleaningEventLink(newEvent);
+		if (isEmpty()) {
+			this.first = newEventLink;
+		} else {
+			newEventLink.setNext(this.first);
+			this.first = newEventLink;
+		}
+	}
+
 	public CleaningEventLink getFirst() {
 		return first;
 	}
 
 	public int getSize() {
 		return size;
+	}
+
+	public void print() {
+		if (!isEmpty()) {
+			CleaningEventLink current = this.first;
+
+			while (current != null) {
+				current.getEvent().print();
+				current = current.getNext();
+			}
+		}
 	}
 
 }

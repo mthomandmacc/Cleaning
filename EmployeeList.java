@@ -1,6 +1,6 @@
 import java.time.LocalDateTime;
 
-public class EmployeeList /*extends LinkedList*/ {
+public class EmployeeList /* extends LinkedList */ {
 
 	private EmployeeLink first = null;
 	private int size = 0;
@@ -26,10 +26,6 @@ public class EmployeeList /*extends LinkedList*/ {
 	 */
 	private EmployeeLink getMiddle(EmployeeLink startLink) {
 
-		if (startLink == null) {
-			return startLink;
-		}
-
 		EmployeeLink slow, fast, middle;
 		slow = startLink;
 		fast = startLink;
@@ -45,14 +41,25 @@ public class EmployeeList /*extends LinkedList*/ {
 
 	}
 
+	public Employee find(String employeeID) {
+		EmployeeLink current = this.first;
+		while (current != null) {
+			if (current.getObject().getEmployeeID().equals(employeeID)) {
+				return current.getObject();
+			}
+			current = current.getNext();
+		}
+		return null;
+	}
+
 	public void sortByNameAscending() {
-		EmployeeLink temp = this.first;
-		first = mergeSort(temp, 1);
+		EmployeeLink temp = mergeSort(this.first, 1);
+		first = temp;
 	}
 
 	public void sortByNameDescending() {
-		EmployeeLink temp = this.first;
-		first = mergeSort(temp, 2);
+		EmployeeLink temp = mergeSort(this.first, 2);
+		first = temp;
 	}
 
 	public void sortByStartDateAscending() {
@@ -66,13 +73,25 @@ public class EmployeeList /*extends LinkedList*/ {
 	}
 
 	public void sortByPayRateAscending() {
-		EmployeeLink temp = this.first;
-		first = mergeSort(temp, 5);
+		EmployeeLink temp = mergeSort(this.first, 5);
+		this.first = temp;
 	}
 
 	public void sortByPayRateDescending() {
 		EmployeeLink temp = this.first;
 		first = mergeSort(temp, 6);
+	}
+
+	public void sortByEmployeeIDAscending() {
+		EmployeeLink temp = this.first;
+		this.first = mergeSort(temp, 7);
+
+	}
+
+	public void sortByEmployeeIDDescending() {
+		EmployeeLink temp = this.first;
+		this.first = mergeSort(temp, 8);
+
 	}
 
 	private EmployeeLink mergeSort(EmployeeLink head, int sortByIndex) {
@@ -91,18 +110,24 @@ public class EmployeeList /*extends LinkedList*/ {
 
 		// Now we merge the two seperate lists
 
-		return mergeLists(head, secondHead, sortByIndex);
+		return mergeLists(mergeSort(head, sortByIndex), mergeSort(secondHead, sortByIndex), sortByIndex);
 
 	}
 
 	// ByNameDescending
 	// ByStartDateAscending
 	private EmployeeLink mergeLists(EmployeeLink link1, EmployeeLink link2, int sortByIndex) {
-		if (link1 == null) { return link2; }
-		if (link2 == null) { return link1; }
+		if (link1 == null) {
+			return link2;
+		}
+		if (link2 == null) {
+			return link1;
+		}
 		if (sortByIndex == 1) {
 			// sort by name ascending
-			if (link1.getObject().getName().compareTo(link2.getObject().getName()) >= 0) {
+
+			if (link1.getObject().getName().compareTo(link2.getObject().getName()) > 0) {
+
 				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
 				return link2;
 			} else {
@@ -111,7 +136,7 @@ public class EmployeeList /*extends LinkedList*/ {
 			}
 		} else if (sortByIndex == 2) {
 			// sort by name descending
-			if (link1.getObject().getName().compareTo(link2.getObject().getName()) <= 0) {
+			if (link1.getObject().getName().compareTo(link2.getObject().getName()) < 0) {
 				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
 				return link2;
 			} else {
@@ -149,7 +174,7 @@ public class EmployeeList /*extends LinkedList*/ {
 				return link1;
 			}
 
-		} else /*if (sortByIndex == 6) */ {
+		} else if (sortByIndex == 6) {
 			// sort by pay rate descending
 			if (link1.getObject().getPayRate() < link2.getObject().getPayRate()) {
 				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
@@ -158,22 +183,42 @@ public class EmployeeList /*extends LinkedList*/ {
 				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
 				return link1;
 			}
+		} else if (sortByIndex == 7) {
+			// sort by name ascending
+			if (link1.getObject().getEmployeeID().compareTo(link2.getObject().getEmployeeID()) >= 0) {
+				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
+				return link2;
+			} else {
+				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
+				return link1;
+			}
+		} else if (sortByIndex == 8) {
+			// sort by name ascending
+			if (link1.getObject().getEmployeeID().compareTo(link2.getObject().getEmployeeID()) < 0) {
+				link2.setNext(mergeLists(link1, link2.getNext(), sortByIndex));
+				return link2;
+			} else {
+				link1.setNext(mergeLists(link1.getNext(), link2, sortByIndex));
+				return link1;
+			}
+
+		} else {
+			return null;
 		}
 
 	}
 
-	protected void addFirst(EmployeeLink newLink){
-		if(this.first==null){
+	protected void addFirst(EmployeeLink newLink) {
+		if (this.first == null) {
 			this.first = newLink;
 		} else {
 			newLink.setNext(this.first);
 			this.first = newLink;
-		
+
 		}
-		
+
 	}
-	
-	
+
 	private EmployeeLink mergeListsByNameDescending(EmployeeLink link1, EmployeeLink link2) {
 		if (link1 == null) {
 			return link2;
@@ -270,14 +315,17 @@ public class EmployeeList /*extends LinkedList*/ {
 	public int getSize() {
 		return this.size;
 	}
-	
-	public boolean isEmpty(){
+
+	public boolean isEmpty() {
 		return (first == null);
 	}
-	protected void insert(EmployeeLink newLink){
+
+	protected void insert(Employee emp) {
+		EmployeeLink newLink = new EmployeeLink(emp);
 		newLink.setNext(this.first);
 		this.first = newLink;
 	}
+
 	/**
 	 * Cycles throught the list counting each link
 	 * 
@@ -336,12 +384,12 @@ public class EmployeeList /*extends LinkedList*/ {
 	public void print() {
 		EmployeeLink current = first;
 		if (current != null) {
-			current.getObject().printEmployee();
+			current.getObject().print();
 		}
 		while (current.getNext() != null) {
 
 			current = current.getNext();
-			current.getObject().printEmployee();
+			current.getObject().print();
 
 		}
 	}
